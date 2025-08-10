@@ -1,16 +1,9 @@
 name: Windows CI
 
 on: 
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'v1.0.0'
-        required: true
-        default: 'v1.0.0'
-      releaseTitle:
-        description: 'Release 标题'
-        required: true
-        default: 'New Release'
+  push:
+      tags:
+        - 'v0.*'
 
 jobs:
   build:
