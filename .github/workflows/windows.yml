@@ -23,7 +23,7 @@ jobs:
         arch: 'win64_msvc2019_64'
     - uses: ilammy/msvc-dev-cmd@v1
       with:
-        vsversion: '2019'
+        vsversion: '2020'
 
     - name: install-meson
       run: pip install meson ninja
