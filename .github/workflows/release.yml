@@ -1,6 +1,6 @@
 name: Windows CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
@@ -48,13 +48,7 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.event.inputs.version }}
-        name: ${{ github.event.inputs.releaseTitle }}
-        body: |
-          自动构建的 Release
-          版本: ${{ github.event.inputs.version }}
-        文件: |
-          # 这里添加需要上传的文件路径
+        files:
           build/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
