@@ -6,23 +6,17 @@ echo on
 set STARTPWD=%CD%
 
 rem The first paths are for workstation builds, the last for CI
-set QTDIR=C:\QtOpenSource\6.7.2\msvc2019_64
-if not exist %QTDIR% (
-    set QTDIR=C:\Qt\6.6.1\msvc2019_64
+if not exist "%QTDIR%" (
+    set QTDIR=%Qt6_DIR%
 )
-if not exist %QTDIR% (
-    set QTDIR=%QT_ROOT_DIR%
-)
-if not exist %QTDIR% (
+if not exist "%QTDIR%" (
 @   echo Could not find Qt in %QTDIR%
+@   echo Could not find Qt in %QT_ROOT_DIR%
 @   exit /b 2
 )
 
 rem Similarly, the first path is for workstation builds, the second for CI
-set vcvarsall="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"
-if not exist %vcvarsall% (
-    set vcvarsall="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
-)
+set vcvarsall="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 if not exist %vcvarsall% (
 @   echo Could not find MSVC vars batch file in %vcvarsall%
 @   exit /b 2
@@ -67,6 +61,7 @@ copy %QTDIR%\plugins\platforms\qoffscreen.dll .\%BUILDDIR%\plugins\platforms
 copy %QTDIR%\plugins\platforms\qwindows.dll .\%BUILDDIR%\plugins\platforms
 copy %QTDIR%\plugins\styles\qmodernwindowsstyle.dll .\%BUILDDIR%\plugins\styles
 copy %QTDIR%\plugins\tls\qopensslbackend.dll .\%BUILDDIR%\plugins\tls
+copy %QTDIR%\plugins\tls\qwindows.dll .\%BUILDDIR%\plugins\tls
 
 copy sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll .\%BUILDDIR%
 
@@ -74,3 +69,11 @@ meson test -C %BUILDDIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set PATH=%ORIGINALPATH%
+
+
+
+
+
+
+
+

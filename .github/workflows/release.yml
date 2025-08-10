@@ -1,0 +1,58 @@
+name: Release
+on:
+  push:
+    tags:
+      - "V0.*"
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    strategy:
+        matrix:
+          toolset: ["14.44"]
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install OpenSSL via Chocolatey
+        run: |
+          choco install openssl --version=3.1.1 --yes --no-progress
+          
+      # - name: Show workspace contents after checkout
+      #   run: Get-ChildItem -Path "C:\Program Files\OpenSSL\" -Recurse
+      
+      - uses: ProjectSavanna/setup-sml@v1.2.0
+        with:
+          smlnj-version: '110.99.4'
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.1'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: ${{ matrix.toolset }} # 指定 14.X 工具集版本
+          vsversion: '2022'
+
+      - name: install-meson
+        run: pip install meson ninja
+
+      - name: repoint
+        run: ./repoint install
+
+      - name: Run build script
+        run: |
+          deploy\win64\build-and-package.bat
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{github.ref_name}}
+          release_name: Release ${{github.ref_name}}
+          files: sonic-visualiser.msi
+          token: ${{secrets.GITHUB_TOKEN}}
