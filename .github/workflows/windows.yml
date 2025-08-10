@@ -20,7 +20,7 @@ jobs:
         version: '6.6.1'
         host: 'windows'
         target: 'desktop'
-        arch: 'win64_msvc2022_64'
+        arch: 'win64_msvc2019_64'
     - uses: ilammy/msvc-dev-cmd@v1
       with:
         vsversion: '2022'
