@@ -1,4 +1,4 @@
-name: Windows CI
+name: Release CI
 
 on: 
   push:
@@ -48,10 +48,14 @@ jobs:
     - name: test
       run: meson test -C build
 
+    - name: Package as ZIP
+      run: |
+        7z a -tzip "${{ github.event.inputs.zipName }}.zip" "build\*"
+
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
         files:
-          build/*
+          ${{ github.event.inputs.zipName }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
