@@ -42,7 +42,7 @@ jobs:
 
     - name: configure
       run: |
-        meson setup build --buildtype release -Dqt6_dir="${{ env.Qt6_DIR }}"
+        meson setup build --buildtype release
 
     - name: copy-qt-etc
       run: |
