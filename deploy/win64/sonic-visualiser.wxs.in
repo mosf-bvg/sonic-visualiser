@@ -254,8 +254,8 @@
                 Guid="7A676FC1-B139-432C-A7D3-F33984934B79">
 	      <File
                   Id="qmodernwindowsstyle"
-                  Name="qmodernwindowsstyle.dll"
-                  Source="build_win64\plugins\styles\qmodernwindowsstyle.dll"/>
+                  Name="qwindows.dll"
+                  Source="build_win64\plugins\styles\qwindows.dll"/>
             </Component>
 	  </Directory>
 
