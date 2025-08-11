@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: 安装 OpenSSL
-        run: choco install openssl --version 3.0.0 -y  # 安装指定版本的 OpenSSL
+        run: choco install openssl --version 3.2.1 -y --no-progress
       - name: 获取 OpenSSL 路径
         run: |
           # 查找安装路径（通常在 C:\Program Files\OpenSSL-Win64\）
