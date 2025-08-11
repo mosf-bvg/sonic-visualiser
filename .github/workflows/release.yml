@@ -49,16 +49,10 @@ jobs:
         run: |
           deploy\win64\build-and-package.bat
 
-      - name: Create release package
-        run: |
-          mkdir release_package
-          xcopy /E /I build_win64 release_package\build_win64
-          7z a -tzip "sonic-visualiser-release.zip" "release_package\*"
-
       - name: Publish release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{github.ref_name}}
           release_name: Release ${{github.ref_name}}
-          filess: sonic-visualiser-release.zip
+          files: sonic-visualiser.msi
           token: ${{secrets.GITHUB_TOKEN}}
