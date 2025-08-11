@@ -13,6 +13,38 @@ jobs:
           toolset: ["14.44"]
 
     steps:
+
+      #############
+      - name: 查找 Redist/MSVC 目录
+        run: |
+          # 定义可能的 Visual Studio 安装路径前缀
+          $vsVersions = @("2022", "2019")
+          $vsEditions = @("Enterprise", "Professional", "Community", "BuildTools")
+          $foundPaths = @()
+      
+          # 遍历所有可能的组合路径
+          foreach ($version in $vsVersions) {
+            foreach ($edition in $vsEditions) {
+              # 64位程序默认安装路径（Program Files）
+              $path1 = "C:\Program Files\Microsoft Visual Studio\$version\$edition\VC\Redist\MSVC"
+              # 32位兼容路径（Program Files (x86)）
+              $path2 = "C:\Program Files (x86)\Microsoft Visual Studio\$version\$edition\VC\Redist\MSVC"
+              
+              if (Test-Path $path1) { $foundPaths += $path1 }
+              if (Test-Path $path2) { $foundPaths += $path2 }
+            }
+          }
+      
+          # 输出找到的路径
+          if ($foundPaths.Count -gt 0) {
+            Write-Host "找到的 Redist/MSVC 目录："
+            $foundPaths | ForEach-Object { Write-Host " - $_" }
+          } else {
+            Write-Warning "未找到 Redist/MSVC 目录"
+          }
+        shell: pwsh  # 使用 PowerShell 执行路径查找
+      #############
+    
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
