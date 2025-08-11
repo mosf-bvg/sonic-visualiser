@@ -6,15 +6,12 @@ echo on
 set STARTPWD=%CD%
 
 rem The first paths are for workstation builds, the last for CI
-set QTDIR=C:\QtOpenSource\6.7.2\msvc2019_64
-if not exist %QTDIR% (
-    set QTDIR=C:\Qt\6.6.1\msvc2019_64
-)
 if not exist %QTDIR% (
     set QTDIR=%QT_ROOT_DIR%
 )
 if not exist %QTDIR% (
 @   echo Could not find Qt in %QTDIR%
+@   echo Could not find Qt in %QT_ROOT_DIR%
 @   exit /b 2
 )
 
