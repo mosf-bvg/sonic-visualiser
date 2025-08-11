@@ -47,5 +47,5 @@ jobs:
         with:
           tag_name: ${{github.ref_name}}
           release_name: Release ${{github.ref_name}}
-          文件: sonic-visualiser-release.zip
+          filess: sonic-visualiser-release.zip
           token: ${{secrets.GITHUB_TOKEN}}
