@@ -16,7 +16,7 @@ if not exist "%QTDIR%" (
 )
 
 rem Similarly, the first path is for workstation builds, the second for CI
-set vcvarsall="C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
+set vcvarsall="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 if not exist %vcvarsall% (
 @   echo Could not find MSVC vars batch file in %vcvarsall%
 @   exit /b 2
@@ -68,6 +68,7 @@ meson test -C %BUILDDIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set PATH=%ORIGINALPATH%
+
 
 
 
