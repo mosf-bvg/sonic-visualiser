@@ -16,20 +16,10 @@ jobs:
       - uses: actions/checkout@v3
 
 
-      - name: Download and extract OpenSSL
+      - name: Install OpenSSL via Chocolatey
         run: |
-          $url = "https://slproweb.com/download/Win64OpenSSL-3_0_12.zip"  # 免安装版
-          Invoke-WebRequest -Uri $url -OutFile "openssl.zip"
-          # 解压到C:\openssl-3.0
-          7z x openssl.zip -oC:\openssl-3.0 -y
-          # 验证文件
-          Test-Path "C:\openssl-3.0\Win64OpenSSL-3_0_12\bin\libssl-3-x64.dll"
-          # 移动到目标路径（可选，简化路径）
-          Move-Item "C:\openssl-3.0\Win64OpenSSL-3_0_12\*" "C:\openssl-3.0" -Force
-          echo "C:\openssl-3.0\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
-
-      - name: Verify
-        run: openssl version
+          # 安装64位OpenSSL 3.0（指定版本）
+          choco install openssl --version=3.0.12 --yes --no-progress --params "/InstallDir:C:\openssl-3.0 /InstallOptions: '/DIR=C:\openssl-3.0'"
 
       
       - uses: ProjectSavanna/setup-sml@v1.2.0
