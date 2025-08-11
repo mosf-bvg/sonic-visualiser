@@ -41,19 +41,19 @@ del signtest.exe
 
 @echo Rebuilding
 
-REM setlocal
+setlocal
 cd %STARTPWD%
 del /q /s build_win64
 call .\deploy\win64\build-64.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
-REM endlocal
+endlocal
 
-REM setlocal
+setlocal
 cd %STARTPWD%
 del /q /s build_win32
 call .\deploy\win64\build-32-helpers.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
-REM endlocal
+endlocal
 
 if "%ARG%" == "sign" (
 @echo Signing executables and libraries
@@ -93,6 +93,7 @@ set PATH=%ORIGINALPATH%
 
 cd %STARTPWD%
 @echo Done
+
 
 
 
