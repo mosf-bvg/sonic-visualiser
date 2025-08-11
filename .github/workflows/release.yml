@@ -13,6 +13,15 @@ jobs:
           toolset: ["14.44"]
 
     steps:
+      - name: 安装 OpenSSL
+        run: choco install openssl --version 3.0.0 -y  # 安装指定版本的 OpenSSL
+      - name: 获取 OpenSSL 路径
+        run: |
+          # 查找安装路径（通常在 C:\Program Files\OpenSSL-Win64\）
+          $opensslPath = (Get-Item "C:\Program Files\OpenSSL-Win64\bin").FullName
+          echo "OPENSSL_PATH=$opensslPath" >> $env:GITHUB_ENV
+        shell: pwsh
+    
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
