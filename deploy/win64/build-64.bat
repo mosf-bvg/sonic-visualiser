@@ -60,7 +60,7 @@ copy %QTDIR%\plugins\platforms\qminimal.dll .\%BUILDDIR%\plugins\platforms
 copy %QTDIR%\plugins\platforms\qoffscreen.dll .\%BUILDDIR%\plugins\platforms
 copy %QTDIR%\plugins\platforms\qwindows.dll .\%BUILDDIR%\plugins\platforms
 copy %QTDIR%\plugins\styles\qmodernwindowsstyle.dll .\%BUILDDIR%\plugins\styles
-copy %QTDIR%\plugins\tls\qopensslbackend.dll .\%BUILDDIR%\plugins\tls
+copy %QTDIR%\plugins\tls\qwindows.dll .\%BUILDDIR%\plugins\tls
 
 copy sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll .\%BUILDDIR%
 
@@ -68,6 +68,7 @@ meson test -C %BUILDDIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set PATH=%ORIGINALPATH%
+
 
 
 
