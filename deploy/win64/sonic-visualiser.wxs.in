@@ -365,7 +365,6 @@
       <ComponentRef Id="Qt6"/>
       <ComponentRef Id="VCRuntime"/>
       <ComponentRef Id="Qt6PlatformPlugins"/>
-      <ComponentRef Id="Qt6StylePlugins"/>
       <ComponentRef Id="Qt6TLSPlugins"/>
       <ComponentRef Id="Piper64"/>
       <ComponentRef Id="Piper32"/>
