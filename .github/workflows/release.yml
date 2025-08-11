@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: windows-2022
 
+    strategy:
+        matrix:
+          toolset: ["14.34"]
+
     steps:
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
@@ -24,6 +28,7 @@ jobs:
           arch: 'win64_msvc2019_64'
       - uses: ilammy/msvc-dev-cmd@v1
         with:
+          toolset: ${{ matrix.toolset }} # 指定 14.X 工具集版本
           vsversion: '2022'
 
       - name: install-meson
