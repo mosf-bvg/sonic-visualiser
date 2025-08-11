@@ -1,75 +1,52 @@
-name: Release CI
-
-on: 
+name: Release
+on:
   push:
-      tags:
-        - 'V0.*'
+    tags:
+      - "V0.*"
 
 jobs:
   build:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: ProjectSavanna/setup-sml@v1.2.0
-      with:
-        smlnj-version: '110.99.4'
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
-    - uses: jurplel/install-qt-action@v3
-      with:
-        version: '6.6.1'
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_msvc2019_64'
-    - uses: ilammy/msvc-dev-cmd@v1
-      with:
-        vsversion: '2022'
+      - uses: actions/checkout@v3
+      - uses: ProjectSavanna/setup-sml@v1.2.0
+        with:
+          smlnj-version: '110.99.4'
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.6.1'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          vsversion: '2022'
 
-    - name: install-meson
-      run: pip install meson ninja
+      - name: install-meson
+        run: pip install meson ninja
 
-    - name: repoint
-      run: ./repoint install
+      - name: repoint
+        run: ./repoint install
 
-    - name: Check repoint dependencies
-      run: |
-        if (-not (Test-Path "sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll")) {
-          Write-Error "libsndfile 依赖未找到，请检查 repoint 配置"
-          exit 1
-        }
+      - name: Run build script
+        run: deploy\win64\build-64.bat
+        env:
+          QT_ROOT_DIR: ${{ env.QT_ROOT }}
 
-    - name: configure
-      run: |
-        meson setup build --buildtype release
+      - name: Create release package
+        run: |
+          mkdir release_package
+          xcopy /E /I build_win64 release_package\build_win64
+          7z a -tzip "sonic-visualiser-release.zip" "release_package\*"
 
-    - name: copy-qt-etc
-      run: |
-        $qtBinPath = Join-Path $env:Qt6_DIR "bin"
-        foreach ($lib in 'Core','Gui','Widgets','Network','Xml','Svg','Test') {
-          Copy-Item (Join-Path $qtBinPath "Qt6$lib.dll") -Destination build
-        }
-        $qtPluginsPath = Join-Path $env:Qt6_DIR "plugins"
-        New-Item -Path "build\platforms" -ItemType Directory -Force | Out-Null
-        Copy-Item (Join-Path $qtPluginsPath "platforms\qwindows.dll") -Destination "build\platforms\"
-        Copy-Item "sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll" -Destination build
-
-    - name: build
-      run: ninja -C build
-
-    - name: test
-      run: meson test -C build
-
-    - name: Package as ZIP
-      run: |
-        # 使用标签名作为ZIP名称
-        $tagName = "${{ github.ref_name }}"
-        7z a -tzip "${tagName}.zip" "build\*"
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: "${{ github.ref_name }}.zip"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{github.ref_name}}
+          release_name: Release ${{github.ref_name}}
+          files: sonic-visualiser-release.zip
+          token: ${{secrets.GITHUB_TOKEN}}
