@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-2022
 
     steps:
@@ -34,13 +33,27 @@ jobs:
     - name: repoint
       run: ./repoint install
 
+    - name: Check repoint dependencies
+      run: |
+        if (-not (Test-Path "sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll")) {
+          Write-Error "libsndfile 依赖未找到，请检查 repoint 配置"
+          exit 1
+        }
+
     - name: configure
-      run: meson setup build --buildtype release
+      run: |
+        meson setup build --buildtype release -Dqt6_dir="${{ env.Qt6_DIR }}"
 
     - name: copy-qt-etc
       run: |
-          foreach ($lib in 'Core','Gui','Widgets','Network','Xml','Svg','Test') { copy "..\Qt\6.6.1\msvc2019_64\bin\Qt6$lib.dll" build }
-          cp sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll build
+        $qtBinPath = Join-Path $env:Qt6_DIR "bin"
+        foreach ($lib in 'Core','Gui','Widgets','Network','Xml','Svg','Test') {
+          Copy-Item (Join-Path $qtBinPath "Qt6$lib.dll") -Destination build
+        }
+        $qtPluginsPath = Join-Path $env:Qt6_DIR "plugins"
+        New-Item -Path "build\platforms" -ItemType Directory -Force | Out-Null
+        Copy-Item (Join-Path $qtPluginsPath "platforms\qwindows.dll") -Destination "build\platforms\"
+        Copy-Item "sv-dependency-builds\win64-msvc\lib\libsndfile-1.dll" -Destination build
 
     - name: build
       run: ninja -C build
@@ -50,12 +63,13 @@ jobs:
 
     - name: Package as ZIP
       run: |
-        7z a -tzip "${{ github.event.inputs.zipName }}.zip" "build\*"
+        # 使用标签名作为ZIP名称
+        $tagName = "${{ github.ref_name }}"
+        7z a -tzip "${tagName}.zip" "build\*"
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files:
-          ${{ github.event.inputs.zipName }}.zip
+        files: "${{ github.ref_name }}.zip"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
