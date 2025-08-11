@@ -18,8 +18,7 @@ jobs:
 
       - name: Install OpenSSL via Chocolatey
         run: |
-          # 安装64位OpenSSL 3.0（指定版本）
-          choco install openssl --version=3.0.12 --yes --no-progress --params "/InstallDir:C:\openssl-3.0 /InstallOptions: '/DIR=C:\openssl-3.0'"
+          choco install openssl --version=3.1.1 --yes --no-progress --params "/InstallDir:C:\openssl-3.0 /InstallOptions: '/DIR=C:\openssl-3.0'"
 
       
       - uses: ProjectSavanna/setup-sml@v1.2.0
