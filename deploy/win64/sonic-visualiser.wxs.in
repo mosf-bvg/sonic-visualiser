@@ -165,12 +165,12 @@
             <File
                 Id="libssl"
                 Name="libssl-3-x64.dll"
-                Source="C:\openssl-3.0\x64\bin\libssl-3-x64.dll"
+                Source="C:\Program Files\OpenSSL\x64\bin\libssl-3-x64.dll"
                 KeyPath="yes"/>
             <File
                 Id="libcrypto"
                 Name="libcrypto-3-x64.dll"
-                Source="c:\openssl-3.0\x64\bin\libcrypto-3-x64.dll"/>
+                Source="C:\Program Files\OpenSSL\x64\bin\libcrypto-3-x64.dll"/>
           </Component>
 
           <Component Win64="yes"
