@@ -46,6 +46,11 @@ del /q /s build_win64
 call .\deploy\win64\build-64.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+@REM cd %STARTPWD%
+@REM del /q /s build_win32
+@REM call .\deploy\win64\build-32-helpers.bat
+@REM if %errorlevel% neq 0 exit /b %errorlevel%
+
 if "%ARG%" == "sign" (
 @echo Signing executables and libraries
 signtool sign /v /n "%NAME%" /t http://time.certum.pl /fd sha1 /a build_win64\*.exe build_win64\*.dll build_win32\*.exe
@@ -84,5 +89,6 @@ set PATH=%ORIGINALPATH%
 
 cd %STARTPWD%
 @echo Done
+
 
 
