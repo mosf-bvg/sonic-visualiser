@@ -9,8 +9,6 @@ jobs:
     runs-on: windows-2022
 
     steps:
-      - name: test
-        run: ./deploy/win64/generate-wxs.ps1
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
