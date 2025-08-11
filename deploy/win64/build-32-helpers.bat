@@ -11,7 +11,7 @@ echo on
 set STARTPWD=%CD%
 
 rem The first path is for workstation builds, the second for CI
-set vcvarsall="C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
+set vcvarsall="C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 if not exist %vcvarsall% (
 @   echo Could not find MSVC vars batch file in %vcvarsall%
 @   exit /b 2
