@@ -46,6 +46,25 @@ del /q /s build_win64
 call .\deploy\win64\build-64.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+
+set pythonLocation=
+set PKG_CONFIG_PATH=
+set Python_ROOT_DIR=
+set Python2_ROOT_DIR=
+set Python3_ROOT_DIR=
+set Qt6_DIR=
+set QT_PLUGIN_PATH=
+set QML2_IMPORT_PATH=
+set Platform=
+set FrameworkDir64=
+set FrameworkVersion64=
+set __DOTNET_ADD_64BIT=
+set __DOTNET_PREFERRED_BITNESS=
+set WindowsSDK_ExecutablePath_x64=
+set LIB=
+set LIBPATH=
+
+
 cd %STARTPWD%
 del /q /s build_win32
 call .\deploy\win64\build-32-helpers.bat
@@ -89,6 +108,7 @@ set PATH=%ORIGINALPATH%
 
 cd %STARTPWD%
 @echo Done
+
 
 
 
