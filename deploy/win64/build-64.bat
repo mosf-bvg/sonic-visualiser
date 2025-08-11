@@ -7,7 +7,7 @@ set STARTPWD=%CD%
 
 rem The first paths are for workstation builds, the last for CI
 if not exist "%QTDIR%" (
-    set QTDIR=%Qt5_DIR%
+    set QTDIR=%Qt6_DIR%
 )
 if not exist "%QTDIR%" (
 @   echo Could not find Qt in %QTDIR%
@@ -71,5 +71,6 @@ meson test -C %BUILDDIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set PATH=%ORIGINALPATH%
+
 
 
