@@ -165,12 +165,12 @@
             <File
                 Id="libssl"
                 Name="libssl-3-x64.dll"
-                Source="C:\Program Files\OpenSSL\x64\bin\libssl-3-x64.dll"
+                Source="C:\Program Files\OpenSSL\libssl-3-x64.dll"
                 KeyPath="yes"/>
             <File
                 Id="libcrypto"
                 Name="libcrypto-3-x64.dll"
-                Source="C:\Program Files\OpenSSL\x64\bin\libcrypto-3-x64.dll"/>
+                Source="C:\Program Files\OpenSSL\libcrypto-3-x64.dll"/>
           </Component>
 
           <Component Win64="yes"
@@ -245,17 +245,6 @@
                   Id="qwindows"
                   Name="qwindows.dll"
                   Source="build_win64\plugins\platforms\qwindows.dll"/>
-            </Component>
-	  </Directory>
-
-	  <Directory Id="Styles" Name="styles">
-            <Component Win64="yes"
-                Id="Qt6StylePlugins"
-                Guid="7A676FC1-B139-432C-A7D3-F33984934B79">
-	      <File
-                  Id="qmodernwindowsstyle"
-                  Name="qwindows.dll"
-                  Source="build_win64\plugins\styles\qwindows.dll"/>
             </Component>
 	  </Directory>
 
