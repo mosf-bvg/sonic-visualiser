@@ -10,7 +10,7 @@ jobs:
 
     strategy:
         matrix:
-          toolset: ["14.44.35211"]
+          toolset: ["14.44"]
 
     steps:
       - uses: actions/checkout@v3
