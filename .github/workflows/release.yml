@@ -13,15 +13,18 @@ jobs:
           toolset: ["14.44"]
 
     steps:
-      - name: 安装 OpenSSL
-        run: choco install openssl --version 3.0.17 -y --no-progress
-      - name: 获取 OpenSSL 路径
+      - name: 手动安装 OpenSSL 3.2.2
         run: |
-          # 查找安装路径（通常在 C:\Program Files\OpenSSL-Win64\）
-          $opensslPath = (Get-Item "C:\Program Files\OpenSSL-Win64\bin").FullName
-          echo "OPENSSL_PATH=$opensslPath" >> $env:GITHUB_ENV
-        shell: pwsh
-    
+          # 官方 64位安装包 URL（3.2.2 版本）
+          $url = "https://slproweb.com/download/WinUniversalOpenSSL-3_0_17.exe"
+          $installerPath = "$env:TEMP\WinUniversalOpenSSL-3_0_17.exe"
+          
+          # 下载安装包
+          Invoke-WebRequest -Uri $url -OutFile $installerPath
+          
+          # 静默安装（安装路径：C:\Program Files\OpenSSL-Win64）
+          Start-Process -FilePath $installerPath -ArgumentList "/silent /verysilent /norestart" -Wait
+      
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
