@@ -19,8 +19,8 @@ jobs:
         run: |
           choco install openssl --version=3.1.1 --yes --no-progress
           
-      - name: Show workspace contents after checkout
-        run: Get-ChildItem -Path "C:\Program Files\OpenSSL\" -Recurse
+      # - name: Show workspace contents after checkout
+      #   run: Get-ChildItem -Path "C:\Program Files\OpenSSL\" -Recurse
       
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
