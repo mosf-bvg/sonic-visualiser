@@ -13,6 +13,21 @@ jobs:
           toolset: ["14.44"]
 
     steps:
+
+      # 关键新增步骤：列出目标目录内容
+      - name: 列出Redist x64目录下的内容
+        run: |
+          $targetDir = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\14.44.35112\x64\"
+          echo "目标目录: $targetDir"
+          if (Test-Path -Path $targetDir) {
+              echo "目录存在，内容如下："
+              Get-ChildItem -Path $targetDir -Recurse | Select-Object FullName
+          } else {
+              echo "ERROR: 目标目录不存在"
+          }
+        shell: pwsh
+        continue-on-error: true  # 即使此步骤失败，也继续执行后续步骤
+    
       - uses: actions/checkout@v3
       - uses: ProjectSavanna/setup-sml@v1.2.0
         with:
