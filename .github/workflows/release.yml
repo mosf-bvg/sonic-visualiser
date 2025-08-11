@@ -35,8 +35,6 @@ jobs:
       - name: Run build script
         run: |
           deploy\win64\build-and-package.bat
-        env:
-          QT_ROOT_DIR: ${{ env.QT_ROOT }}
 
       - name: Create release package
         run: |
