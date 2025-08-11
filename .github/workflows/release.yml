@@ -34,8 +34,7 @@ jobs:
 
       - name: Run build script
         run: |
-          echo "QT_ROOT_DIR=$env:QT_ROOT" >> $env:GITHUB_ENV
-          deploy\win64\build-64.bat
+          deploy\win64\build-and-package.bat
         env:
           QT_ROOT_DIR: ${{ env.QT_ROOT }}
 
@@ -50,5 +49,5 @@ jobs:
         with:
           tag_name: ${{github.ref_name}}
           release_name: Release ${{github.ref_name}}
-          files: sonic-visualiser-release.zip
+          文件: sonic-visualiser-release.zip
           token: ${{secrets.GITHUB_TOKEN}}
