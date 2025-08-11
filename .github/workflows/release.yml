@@ -33,7 +33,9 @@ jobs:
         run: ./repoint install
 
       - name: Run build script
-        run: deploy\win64\build-64.bat
+        run: |
+          echo "QT_ROOT_DIR=$env:QT_ROOT" >> $env:GITHUB_ENV
+          deploy\win64\build-64.bat
         env:
           QT_ROOT_DIR: ${{ env.QT_ROOT }}
 
